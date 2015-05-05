@@ -14,23 +14,20 @@ marked.setOptions({
 
 var content = [], output = [];
 
-//var styles = {
-//  center: {
-//    start: '<div class="stack-center"><div class="stacked-center">',
-//    end: '</div></div>'
-//  }
-//};
 
-/**
- * Program
- */
-var filename = process.argv[2] || 'slides.md';
-if (filename.slice(-3) !== '.md') {
+// Default filename = slides.md
+// Pass a custom filename in `node mdFlowtime.js filename.md`
+// Pass a custom output filename: `node mdFlowtime.js filename.md filename.html`
+var inputFile = process.argv[2] || 'slides.md';
+var outputFile = process.argv[3] || 'slides.html';
+if (inputFile.slice(-3) !== '.md') {
   throw 'File must be .md (markdown).';
 }
-
-var input = fs.createReadStream(filename);
+// Read
+var input = fs.createReadStream(inputFile);
+// Load content, run slidify(content)
 readLines(input, func);
+
 
 
 function slidify(content) {
@@ -42,7 +39,6 @@ function slidify(content) {
     found = {
       section: '***',
       slide: '---'
-      //style: '@@@'
     },
     current = [],
     currentEnd = [];
@@ -58,7 +54,7 @@ function slidify(content) {
   /**
    * Write
    */
-  fs.writeFile('slides.html', output.join(''), function (err) {
+  fs.writeFile(outputFile, output.join(''), function (err) {
     if (err) console.log(err);
     console.log('Saved to slides.html');
   });
@@ -118,9 +114,6 @@ function slidify(content) {
       _marked(current);
       _reset();
       _addSection();
-      //} else if (line.slice(0, 3) === found.style) {
-      // not currently working
-      //_addStyles(line.slice(3));
     } else {
       current.push(line);
     }

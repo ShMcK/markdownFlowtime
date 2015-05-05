@@ -60,9 +60,7 @@
 
 
 <div class="flowtime">
-  <!-- load slides.html content here -->
 
-  <!-- end -->
 </div>
 
 <a href="https://github.com/marcolago/flowtime.js"><img
@@ -122,5 +120,10 @@
   Flowtime.start();
 </script>
 <script type="text/javascript" src="http://slidemote.jit.su/slidemote.js#flowtime"></script>
+<script>
+  function load_slides(){
+    document.getElementByClassName("flowtime").innerHTML='<object type="text/html" data="slides.html" ></object>';
+  }
+</script>
 </body>
 </html>
