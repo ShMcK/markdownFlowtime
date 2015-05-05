@@ -1,15 +1,37 @@
 var fs = require('fs'),
   marked = require('marked');
 
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true, // Github Flavored Markdown
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false
+});
+
+var content = [], output = [];
+
 //var styles = {
 //  center: {
 //    start: '<div class="stack-center"><div class="stacked-center">',
 //    end: '</div></div>'
 //  }
 //};
-var content = [];
-var input = fs.createReadStream('slides.md');
+
+/**
+ * Program
+ */
+var filename = process.argv[2] || 'slides.md';
+if (filename.slice(-3) !== '.md') {
+  throw 'File must be .md (markdown).';
+}
+
+var input = fs.createReadStream(filename);
 readLines(input, func);
+
 
 function slidify(content) {
   var count = {
@@ -22,24 +44,28 @@ function slidify(content) {
       slide: '---'
       //style: '@@@'
     },
-    output = [],
-    current = [];
+    current = [],
     currentEnd = [];
 
 
-  // WRITE
   output.push(_init());
   content.map(function (line) {
     _scan(line);
   });
   _marked(current);
   output.push(_end());
+
+  /**
+   * Write
+   */
   fs.writeFile('slides.html', output.join(''), function (err) {
     if (err) console.log(err);
     console.log('Saved to slides.html');
   });
 
-  // FUNCTIONS
+  /**
+   * Functions
+   */
   function _init() {
     output.push('<div class="ft-section" data-id="section-' + count.section + '">' +
       '<div id="/section-' + count.section + '/page-' + count.page + '" class="ft-page" data-id="page-' + count.total + '">');
@@ -92,7 +118,7 @@ function slidify(content) {
       _marked(current);
       _reset();
       _addSection();
-    //} else if (line.slice(0, 3) === found.style) {
+      //} else if (line.slice(0, 3) === found.style) {
       // not currently working
       //_addStyles(line.slice(3));
     } else {

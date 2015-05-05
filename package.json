@@ -1,15 +1,16 @@
 {
   "name": "flowtime-markdown",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "markdown editor for flowtime.js",
   "main": "Gulpfile.js",
   "scripts": {
-    "test": "gulp"
+    "start": "node mdFlowtime.js"
   },
   "keywords": [
     "flowtime",
     "markdown"
   ],
+  "repository": "https://github.com/ShMcK/markdownFlowtime",
   "author": "ShMcK <me@shmck.com>",
   "license": "ISC",
   "devDependencies": {
