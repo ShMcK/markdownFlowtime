@@ -1,11 +1,6 @@
 var fs = require('fs'),
   marked = require('marked');
 
-//gulp.task('default', function () {
-//  return gulp.src('slides.md')
-//    .pipe(gulp.dest('dist'));
-//});
-
 var content = [];
 
 function readLines(input, func) {
@@ -54,7 +49,7 @@ function slidify(content) {
     _scan(line);
   });
   output.push(_end());
-  console.log(output);
+  console.log(output.join(''));
 
 
   // FUNCTIONS
