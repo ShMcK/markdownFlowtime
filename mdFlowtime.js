@@ -2,33 +2,6 @@ var fs = require('fs'),
   marked = require('marked');
 
 var content = [];
-
-function readLines(input, func) {
-  var remaining = '';
-
-  input.on('data', function(data) {
-    remaining += data;
-    var index = remaining.indexOf('\n');
-    while (index > -1) {
-      var line = remaining.substring(0, index);
-      remaining = remaining.substring(index + 1);
-      func(line);
-      index = remaining.indexOf('\n');
-    }
-  });
-
-  input.on('end', function() {
-    if (remaining.length > 0) {
-      func(remaining);
-      slidify(content);
-    }
-  });
-}
-
-function func(data) {
-  content.push(data);
-}
-
 var input = fs.createReadStream('slides.md');
 readLines(input, func);
 
@@ -45,13 +18,18 @@ function slidify(content) {
     output = [],
     current = [];
 
+
+  // WRITE
   output.push(_init());
   content.map(function(line) {
     _scan(line);
   });
   output.push(_end());
   console.log(output.join(''));
-
+  fs.writeFile('slides.html', output.join(''), function(err) {
+    if(err) console.log(err);
+    console.log('Saved to slides.html');
+  });
 
   // FUNCTIONS
   function _init() {
@@ -98,4 +76,34 @@ function slidify(content) {
       current.push(line);
     }
   }
+}
+
+function func(data) {
+  content.push(data);
+}
+
+function done() {
+  slidify(content);
+}
+
+function readLines(input, func) {
+  var remaining = '';
+
+  input.on('data', function(data) {
+    remaining += data;
+    var index = remaining.indexOf('\n');
+    while (index > -1) {
+      var line = remaining.substring(0, index);
+      remaining = remaining.substring(index + 1);
+      func(line);
+      index = remaining.indexOf('\n');
+    }
+  });
+
+  input.on('end', function() {
+    if (remaining.length > 0) {
+      func(remaining);
+      done();
+    }
+  });
 }

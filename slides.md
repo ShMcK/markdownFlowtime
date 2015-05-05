@@ -1,4 +1,3 @@
-***
 # First Section
 This is the first slide
 ---
