@@ -42,7 +42,8 @@ function slidify(content) {
       section: '***',
       slide: '---'
     },
-    output = [];
+    output = [],
+    current = [];
 
   output.push(_init());
   content.map(function(line) {
@@ -85,7 +86,6 @@ function slidify(content) {
   }
 
   function _scan(line) {
-    var current = [];
     if (line === found.slide) {
       _marked(current);
       current = [];
