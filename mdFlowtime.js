@@ -78,7 +78,7 @@ function slidify(content) {
   }
 
   function _marked(array) {
-    var markdownString = array.join('').toString();
+    var markdownString = array.join('\n').toString();
     marked(markdownString, function(err, content) {
       if (err) throw err;
       output.push(content);
