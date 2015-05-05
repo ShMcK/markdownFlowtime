@@ -1,12 +1,12 @@
 var fs = require('fs'),
   marked = require('marked');
 
-var styles = {
-  center: {
-    start: '<div class="stack-center"><div class="stacked-center">',
-    end: '</div></div>'
-  }
-};
+//var styles = {
+//  center: {
+//    start: '<div class="stack-center"><div class="stacked-center">',
+//    end: '</div></div>'
+//  }
+//};
 var content = [];
 var input = fs.createReadStream('slides.md');
 readLines(input, func);
@@ -19,8 +19,8 @@ function slidify(content) {
     },
     found = {
       section: '***',
-      slide: '---',
-      style: '@@@'
+      slide: '---'
+      //style: '@@@'
     },
     output = [],
     current = [];
@@ -32,8 +32,8 @@ function slidify(content) {
   content.map(function (line) {
     _scan(line);
   });
+  _marked(current);
   output.push(_end());
-  console.log(output.join(''));
   fs.writeFile('slides.html', output.join(''), function (err) {
     if (err) console.log(err);
     console.log('Saved to slides.html');
@@ -72,15 +72,15 @@ function slidify(content) {
     });
   }
 
-  function _addStyles(style) {
-    console.log('-----------------------');
-    current.unshift(styles[style].start);
-    currentEnd.push(styles[style].end);
-  }
+  //function _addStyles(style) {
+  //  console.log('-----------------------');
+  //  current.unshift(styles[style].start);
+  //  currentEnd.push(styles[style].end);
+  //}
 
   function _reset() {
     current = [];
-    currentEnd = [];
+    //currentEnd = [];
   }
 
   function _scan(line) {
@@ -91,8 +91,8 @@ function slidify(content) {
     } else if (line === found.section) {
       _marked(current);
       _reset();
-      _addSection()
-    } else if (line.slice(0, 3) === found.style) {
+      _addSection();
+    //} else if (line.slice(0, 3) === found.style) {
       // not currently working
       //_addStyles(line.slice(3));
     } else {
@@ -124,7 +124,7 @@ function readLines(input, func) {
   });
 
   input.on('end', function () {
-    if (remaining.length > 0) {
+    if (remaining.length) {
       func(remaining);
       done();
     }
