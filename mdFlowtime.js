@@ -1,6 +1,12 @@
 var fs = require('fs'),
   marked = require('marked');
 
+var styles = {
+  center: {
+    start: '<div class="stack-center"><div class="stacked-center">',
+    end: '</div></div>'
+  }
+};
 var content = [];
 var input = fs.createReadStream('slides.md');
 readLines(input, func);
@@ -15,12 +21,6 @@ function slidify(content) {
       section: '***',
       slide: '---',
       style: '@@@'
-    },
-    styles = {
-      center: {
-        start: '<div class="stack-center"><div class="stacked-center">',
-        end: '</div></div>'
-      }
     },
     output = [],
     current = [];
@@ -74,13 +74,13 @@ function slidify(content) {
 
   function _addStyles(style) {
     console.log('-----------------------');
-    current.push(styles[style].start);
+    current.unshift(styles[style].start);
     currentEnd.push(styles[style].end);
   }
 
   function _reset() {
     current = [];
-    currentAppend = [];
+    currentEnd = [];
   }
 
   function _scan(line) {
@@ -93,7 +93,8 @@ function slidify(content) {
       _reset();
       _addSection()
     } else if (line.slice(0, 3) === found.style) {
-      _addStyles(line.slice(3));
+      // not currently working
+      //_addStyles(line.slice(3));
     } else {
       current.push(line);
     }
