@@ -1,0 +1,22 @@
+{
+  "name": "flowtime-markdown",
+  "version": "1.0.0",
+  "description": "markdown editor for flowtime.js",
+  "main": "Gulpfile.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "keywords": [
+    "flowtime",
+    "markdown"
+  ],
+  "author": "ShMcK <me@shmck.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "fs": "0.0.2",
+    "gulp": "^3.8.11",
+    "gulp-markdown": "^1.0.0",
+    "gulp-regex-replace": "^0.2.3",
+    "marked": "^0.3.3"
+  }
+}
