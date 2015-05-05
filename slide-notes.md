@@ -1,5 +1,6 @@
 ***
 # First Section
+!--center
 This is the first slide
 ---
 ## Second page

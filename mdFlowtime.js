@@ -13,21 +13,29 @@ function slidify(content) {
     },
     found = {
       section: '***',
-      slide: '---'
+      slide: '---',
+      style: '@@@'
+    },
+    styles = {
+      center: {
+        start: '<div class="stack-center"><div class="stacked-center">',
+        end: '</div></div>'
+      }
     },
     output = [],
     current = [];
+    currentEnd = [];
 
 
   // WRITE
   output.push(_init());
-  content.map(function(line) {
+  content.map(function (line) {
     _scan(line);
   });
   output.push(_end());
   console.log(output.join(''));
-  fs.writeFile('slides.html', output.join(''), function(err) {
-    if(err) console.log(err);
+  fs.writeFile('slides.html', output.join(''), function (err) {
+    if (err) console.log(err);
     console.log('Saved to slides.html');
   });
 
@@ -57,21 +65,35 @@ function slidify(content) {
 
   function _marked(array) {
     var markdownString = array.join('\n').toString();
-    marked(markdownString, function(err, content) {
+    marked(markdownString, function (err, content) {
       if (err) throw err;
       output.push(content);
+      output.push(currentEnd);
     });
+  }
+
+  function _addStyles(style) {
+    console.log('-----------------------');
+    current.push(styles[style].start);
+    currentEnd.push(styles[style].end);
+  }
+
+  function _reset() {
+    current = [];
+    currentAppend = [];
   }
 
   function _scan(line) {
     if (line === found.slide) {
       _marked(current);
-      current = [];
-       _addPage();
+      _reset();
+      _addPage();
     } else if (line === found.section) {
-       _marked(current);
-      current = [];
+      _marked(current);
+      _reset();
       _addSection()
+    } else if (line.slice(0, 3) === found.style) {
+      _addStyles(line.slice(3));
     } else {
       current.push(line);
     }
@@ -89,7 +111,7 @@ function done() {
 function readLines(input, func) {
   var remaining = '';
 
-  input.on('data', function(data) {
+  input.on('data', function (data) {
     remaining += data;
     var index = remaining.indexOf('\n');
     while (index > -1) {
@@ -100,7 +122,7 @@ function readLines(input, func) {
     }
   });
 
-  input.on('end', function() {
+  input.on('end', function () {
     if (remaining.length > 0) {
       func(remaining);
       done();
