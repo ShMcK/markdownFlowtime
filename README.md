@@ -5,13 +5,16 @@ Special thanks to @marcolago for doing all the hard work creating the fantastic 
 
 ### How
  
-In your slides add `---` for a slide break, or `***` for a section break.
-Don't start or end with any breaks.
+In `slides.md`: 
+
+* add `---` for a slide break
+* add `***` for a section break.
+* Don't start or end with any breaks.
 
 ### Setup
 
-1.`git clone git@github.com:marcolago/flowtime.js.git` 
+1. `git clone git@github.com:marcolago/flowtime.js.git` 
 2. Delete the content between `<div class="flowtime">` and its closing div.
        Add two tags: `<!--@flowtime-start--><!--@flowtime-end-->`
 3. Write markdown in a file called `slides.md`
-4. run `node mdFlowtime.js` to compile templates into `slides.html` & `index.html`
+4. Run `node mdFlowtime.js` to compile templates into `slides.html` & `index.html`
