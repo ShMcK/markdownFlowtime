@@ -59,16 +59,29 @@ function slidify(content) {
     console.log('Saved to slides.html');
   });
 
+  // write to index.html
+
+  fs.readFile('index.html', 'utf8', function(err, data) {
+    if (err) return console.log(err);
+    var start = data.match(/<!--@flowtime-start-->/).index;
+    var end = data.match(/<!--@flowtime-end-->/).index;
+    var result = data.substring(0, start) + output.join('') + data.substring(end + 20);
+    console.log(result);
+    fs.writeFile('index.html', result, 'utf8', function (err) {
+      if (err) return console.log(err);
+      console.log('Wrote slides into index.html');
+    });
+  });
+
   /**
    * Functions
    */
   function _init() {
-    output.push('<div class="ft-section" data-id="section-' + count.section + '">' +
+    output.push('<!--@flowtime-start--><div class="ft-section" data-id="section-' + count.section + '">' +
       '<div id="/section-' + count.section + '/page-' + count.page + '" class="ft-page" data-id="page-' + count.total + '">');
   }
-
   function _end() {
-    output.push('</div></div>');
+    output.push('</div></div><!--@flowtime-end-->');
   }
 
   function _addPage() {

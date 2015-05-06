@@ -1,8 +1,8 @@
 {
   "name": "flowtime-markdown",
   "version": "0.1.0",
-  "description": "markdown editor for flowtime.js",
-  "main": "Gulpfile.js",
+  "description": "Markdown editor for flowtime.js",
+  "main": "mdFlowtime.js",
   "scripts": {
     "start": "node mdFlowtime.js"
   },

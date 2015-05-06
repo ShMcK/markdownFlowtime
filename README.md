@@ -11,11 +11,7 @@ Don't start or end with any breaks.
 ### Setup
 
 1.`git clone git@github.com:marcolago/flowtime.js.git` 
-2. Write markdown in a file called `slides.md`
-3. run `node mdFlowtime.js` to compile templates into `slides.html`
-4. Copy the contents of `slides.html` into `index.html` located `<div class="flowtime"> HERE </div>`
-
-### Todo
-
-* Load HTML into index.html automatically.
-* Load slide templates from markdown more easily (@@@className, perhaps)
+2. Delete the content between `<div class="flowtime">` and its closing div.
+       Add two tags: `<!--@flowtime-start--><!--@flowtime-end-->`
+3. Write markdown in a file called `slides.md`
+4. run `node mdFlowtime.js` to compile templates into `slides.html` & `index.html`
