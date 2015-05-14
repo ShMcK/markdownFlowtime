@@ -13,8 +13,9 @@ In `slides.md`:
 
 ### Setup
 
-1. `git clone git@github.com:marcolago/flowtime.js.git` 
+1. `git clone git@github.com:marcolago/flowtime.js.git`, copy in `mdFlowtime.js` to the main directory
 2. Delete the content between `<div class="flowtime">` and its closing div.
        Add two tags: `<!--@flowtime-start--><!--@flowtime-end-->`
 3. Write markdown in a file called `slides.md`
+4. Install the dependencies `npm i -D fs marked`
 4. Run `node mdFlowtime.js` to compile templates into `slides.html` & `index.html`
