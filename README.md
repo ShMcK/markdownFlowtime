@@ -1,6 +1,6 @@
 #Flowtime.js Markdown Editor
 
-Write [Flowtime.js](http://flowtime-js.marcolago.com/#/section-2/page-2) presentations in markdown.
+Write [Flowtime.js](https://marcolago.github.io/flowtime.js/) presentations in markdown.
 Special thanks to @marcolago for doing all the hard work creating the fantastic HTML presentation framework.
 
 ### How
